@@ -1,0 +1,324 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #f0f2f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+h1 {
+    color: #1a73e8;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+.search-container {
+    background: white;
+    padding: clamp(1rem, 3vw, 2rem);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.search-box {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+input {
+    flex: 1;
+    min-width: 200px;
+    padding: clamp(0.8rem, 2vw, 1rem);
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #1a73e8;
+}
+
+button {
+    padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+    background: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+button:hover {
+    background: #1557b0;
+}
+
+.result {
+    background: white;
+    padding: clamp(1rem, 3vw, 2rem);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.result.active {
+    display: block;
+}
+
+.word {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: #1a73e8;
+    margin-bottom: 1rem;
+    word-break: break-word;
+}
+
+.phonetic {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.meaning {
+    margin-bottom: 1.5rem;
+}
+
+.part-of-speech {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.definition {
+    margin-bottom: 0.5rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    line-height: 1.5;
+}
+
+.example {
+    color: #666;
+    font-style: italic;
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+    margin-top: 0.3rem;
+}
+
+.error {
+    color: #d32f2f;
+    text-align: center;
+    margin-top: 1rem;
+    display: none;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    padding: 0 1rem;
+}
+
+.error.active {
+    display: block;
+}
+
+/* Media Queries for different screen sizes */
+@media screen and (max-width: 480px) {
+    body {
+        padding: 0.5rem;
+    }
+
+    .container {
+        padding: 0 0.5rem;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    input, button {
+        width: 100%;
+    }
+
+    .result {
+        padding: 1rem;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .search-box {
+        gap: 0.5rem;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .container {
+        padding: 0 2rem;
+    }
+}
+
+/* Theme Toggle Button - Updated for better mobile responsiveness */
+.theme-toggle {
+    position: fixed;
+    top: clamp(0.5rem, 2vw, 1rem);
+    right: clamp(0.5rem, 2vw, 1rem);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: clamp(0.5rem, 2vw, 0.8rem);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    width: clamp(2.5rem, 8vw, 3rem);
+    height: clamp(2.5rem, 8vw, 3rem);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(1.1);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-toggle i {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    color: #1a73e8;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover i {
+    transform: rotate(30deg);
+}
+
+/* Mobile-specific theme toggle adjustments */
+@media screen and (max-width: 480px) {
+    .theme-toggle {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.6rem;
+        width: 2.8rem;
+        height: 2.8rem;
+    }
+
+    .theme-toggle i {
+        font-size: 1.3rem;
+    }
+
+    /* Adjust container padding to prevent overlap with theme toggle */
+    .container {
+        padding-top: 3.5rem;
+    }
+}
+
+/* Tablet-specific theme toggle adjustments */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .theme-toggle {
+        top: 0.8rem;
+        right: 0.8rem;
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .theme-toggle i {
+        font-size: 1.4rem;
+    }
+}
+
+/* Dark mode theme toggle adjustments */
+[data-theme="dark"] .theme-toggle {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .theme-toggle:active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Add touch feedback for mobile */
+@media (hover: none) {
+    .theme-toggle:hover {
+        transform: none;
+    }
+
+    .theme-toggle:active {
+        transform: scale(0.95);
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="dark"] .theme-toggle:active {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+}
+
+/* Ensure theme toggle is always visible */
+@media screen and (max-width: 360px) {
+    .theme-toggle {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0.5rem;
+    }
+
+    .theme-toggle i {
+        font-size: 1.2rem;
+    }
+}
+
+/* Dark mode styles */
+[data-theme="dark"] {
+    background: #1a1a1a;
+}
+
+[data-theme="dark"] .search-container,
+[data-theme="dark"] .result {
+    background: #2d2d2d;
+}
+
+[data-theme="dark"] input {
+    background: #2d2d2d;
+    color: #ffffff;
+    border-color: #404040;
+}
+
+[data-theme="dark"] .word {
+    color: #4dabf7;
+}
+
+[data-theme="dark"] .phonetic,
+[data-theme="dark"] .part-of-speech,
+[data-theme="dark"] .example {
+    color: #a0a0a0;
+}
+
+[data-theme="dark"] .definition {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .theme-toggle i {
+    color: #4dabf7;
+}
